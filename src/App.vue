@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <v-main>
+    <v-container>
       <router-view />
-    </v-main>
+    </v-container>
   </v-app>
 </template>
 
@@ -14,3 +14,14 @@ export default {
   })
 };
 </script>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+}
+</style>

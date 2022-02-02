@@ -1,13 +1,25 @@
 <template>
-  <h1>Home</h1>
+  <v-container class="flex justify-center align-center">
+    <img class="logo" src="../assets/logo.png" alt="" />
+    <h1>Home Page</h1>
+  </v-container>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({
+<script>
+export default {
   name: 'Home',
-
-  components: {}
-});
+  components: {},
+  data() {
+    return {};
+  },
+  methods: {},
+  mounted() {
+    let user = localStorage.getItem('user-info');
+    if (!user) {
+      this.$router.push({ name: 'Login' });
+    }
+  }
+};
 </script>
+
+<style></style>
