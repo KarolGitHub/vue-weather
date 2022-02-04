@@ -1,8 +1,12 @@
 <template>
   <v-container class="flex justify-center align-center">
-    <v-form v-model="isValid" @submit.prevent="login">
+    <v-form @submit.prevent="register">
       <v-container>
         <v-col>
+          <v-col class="ma-auto" cols="9" sm="6" md="3">
+            <v-text-field v-model="name" placeholder="Enter Name" :rules="nameRules" />
+          </v-col>
+
           <v-col class="ma-auto" cols="9" sm="6" md="3">
             <v-text-field type="email" v-model="email" placeholder="Enter Email" :rules="emailRules" />
           </v-col>
@@ -12,7 +16,16 @@
           </v-col>
 
           <v-col class="ma-auto" cols="9" sm="6" md="3">
-            <v-btn block color="primary" type="submit" :disabled="!isValid">Login</v-btn>
+            <v-text-field
+              type="password"
+              v-model="confirmPassword"
+              placeholder="Confirm Password"
+              :rules="passwordRules"
+            />
+          </v-col>
+
+          <v-col class="ma-auto" cols="9" sm="6" md="3">
+            <v-btn block color="primary" type="submit">Register</v-btn>
           </v-col>
         </v-col>
       </v-container>
@@ -21,28 +34,32 @@
 </template>
 
 <script>
-import { emailRules, passwordRules } from '../utils';
+import { nameRules, emailRules, passwordRules } from '../utils';
 
 export default {
+  name: 'Login',
+  components: {},
   data() {
     return {
+      name: '',
       email: '',
       password: '',
-      isValid: true,
+      confirmPassword: '',
+      nameRules: nameRules,
       emailRules: emailRules,
       passwordRules: passwordRules
     };
   },
   methods: {
-    login: function () {
-      let email = this.email;
-      let password = this.password;
-
+    register() {
       this.$store
-        .dispatch('login', { email, password })
+        .dispatch('register', { name: this.name, email: this.email, password: this.password })
         .then(() => this.$router.push('/'))
         .catch((err) => console.log(err));
     }
   }
 };
 </script>
+
+<style>
+</style>

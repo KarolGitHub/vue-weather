@@ -12,7 +12,8 @@ import {
   VIcon,
   VList,
   VProgressLinear,
-  VTextField
+  VTextField,
+  VToolbar
 } from 'vuetify';
 
 Vue.use(Vuetify, {
@@ -27,7 +28,8 @@ Vue.use(Vuetify, {
     VIcon,
     VList,
     VProgressLinear,
-    VTextField
+    VTextField,
+    VToolbar
   },
   theme: {
     // primary: manifestJSON.theme_color
@@ -37,12 +39,12 @@ Vue.use(Vuetify, {
     error: '#f44336',
     warning: '#ffc107',
     info: '#4caf50',
-    success: '#9c27b0'      
+    success: '#9c27b0'
   }
 });
 
 export default new Vuetify({
   icons: {
-    iconfont: 'mdi',
-  },
+    iconfont: 'mdi'
+  }
 });
