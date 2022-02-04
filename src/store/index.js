@@ -33,20 +33,22 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit('authRequest');
         axios({
-          url: 'api/users',
-          data: user,
-          method: 'POST',
+          url: `api/users?email=${user.email}&password=${user.password}`,
+          method: 'GET',
           headers: {
             'Content-type': 'application/json'
           }
         })
           .then((res) => {
-            const authToken = res.data.id;
-            const user = res.data;
-            localStorage.setItem('auth-token', authToken);
-            axios.defaults.headers.common['Authorization'] = authToken;
-            commit('authSuccess', { authToken: authToken, user: user });
-            resolve(res);
+            if (res.data.length) {
+              const authToken = res.data.id;
+              const user = res.data;
+              localStorage.setItem('auth-token', authToken);
+              axios.defaults.headers.common['Authorization'] = authToken;
+              commit('authSuccess', { authToken: authToken, user: user });
+              resolve(res);
+            }
+            reject(new Error('wrong login email or password'));
           })
           .catch((err) => {
             commit('authError');

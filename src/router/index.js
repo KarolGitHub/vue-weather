@@ -3,7 +3,7 @@ import Vue from 'vue';
 import Home from '@/views/Home';
 import Login from '@/views/Login';
 import Register from '@/views/Register';
-import Room from '@/views/Room';
+import Blog from '@/views/Blog';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -32,9 +32,9 @@ const routes = [
     component: Register
   },
   {
-    path: '/room',
-    name: 'Room',
-    component: Room,
+    path: '/blog',
+    name: 'Blog',
+    component: Blog,
     meta: {
       requiresAuth: true
     }

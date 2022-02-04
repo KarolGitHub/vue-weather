@@ -4,11 +4,11 @@
       <v-container>
         <v-col>
           <v-col class="ma-auto" cols="9" sm="6" md="3">
-            <v-text-field type="email" v-model="email" placeholder="Enter Email" :rules="emailRules" />
+            <v-text-field type="email" v-model="email" placeholder="Enter Email" :rules="emptyRule" />
           </v-col>
 
           <v-col class="ma-auto" cols="9" sm="6" md="3">
-            <v-text-field type="password" v-model="password" placeholder="Enter Password" :rules="passwordRules" />
+            <v-text-field type="password" v-model="password" placeholder="Enter Password" :rules="emptyRule" />
           </v-col>
 
           <v-col class="ma-auto" cols="9" sm="6" md="3">
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { emailRules, passwordRules } from '../utils';
+import { emptyRule } from '../utils';
 
 export default {
   data() {
@@ -29,8 +29,7 @@ export default {
       email: '',
       password: '',
       isValid: true,
-      emailRules: emailRules,
-      passwordRules: passwordRules
+      emptyRule: emptyRule
     };
   },
   methods: {
