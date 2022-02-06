@@ -8,6 +8,9 @@
       <v-list-item v-if="isLoggedIn" @click="logout">
         <span style="cursor: pointer">Logout</span>
       </v-list-item>
+      <v-list-item v-if="isLoggedIn">
+        <router-link to="/forecast" tag="span" style="cursor: pointer"> Weather Forecast </router-link>
+      </v-list-item>
       <v-list-item v-else>
         <router-link to="/login">Login</router-link>
       </v-list-item>
@@ -24,6 +27,9 @@
           <router-link to="/" tag="span"> Home </router-link>
         </v-list-item>
         <v-list-item v-if="isLoggedIn" @click="logout"> <span>Logout</span></v-list-item>
+        <v-list-item v-if="isLoggedIn">
+          <router-link to="/forecast" tag="span" style="cursor: pointer"> Weather Forecast </router-link>
+        </v-list-item>
         <v-list-item v-else><router-link to="/login">Login</router-link> </v-list-item>
       </v-toolbar-items>
     </v-app-bar>
@@ -41,20 +47,20 @@ export default {
     sidebar: false
   }),
   computed: {
-    isLoggedIn: function () {
+    isLoggedIn: function() {
       return this.$store.getters.isLoggedIn;
     }
   },
   methods: {
-    logout: function () {
+    logout: function() {
       this.$store.dispatch('logout').then(() => {
         this.$router.push('/login');
       });
     }
   },
-  created: function () {
-    this.$http.interceptors.response.use(undefined, function (err) {
-      return new Promise(function (resolve, reject) {
+  created: function() {
+    this.$http.interceptors.response.use(undefined, function(err) {
+      return new Promise(function(resolve, reject) {
         if (err.response.status === 401 && err.config && !err.config.__isRetryRequest) {
           this.$store.dispatch(this.logout);
         }

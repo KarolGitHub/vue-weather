@@ -4,6 +4,7 @@ import Home from '@/views/Home';
 import Login from '@/views/Login';
 import Register from '@/views/Register';
 import Blog from '@/views/Blog';
+import Forecast from '@/views/Forecast';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -35,6 +36,14 @@ const routes = [
     path: '/blog',
     name: 'Blog',
     component: Blog,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/forecast',
+    name: 'Forecast',
+    component: Forecast,
     meta: {
       requiresAuth: true
     }

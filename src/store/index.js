@@ -9,7 +9,17 @@ export default new Vuex.Store({
     login: null,
     status: '',
     authToken: localStorage.getItem('auth-token') || '',
-    user: {}
+    user: {},
+    apiKey: '5d1b6b9deab390416a61a29633203a86',
+    weatherData: {}
+  },
+  getters: {
+    isLoggedIn: (state) => !!state.authToken,
+    authStatus: (state) => state.status,
+    getWeatherData: (state) => state.weatherData,
+    getWeatherCountry(state) {
+      return state.weatherData.country;
+    }
   },
   mutations: {
     authRequest(state) {
@@ -26,6 +36,9 @@ export default new Vuex.Store({
     logout(state) {
       state.status = '';
       state.authToken = '';
+    },
+    setWeatherData(state, data) {
+      state.weatherData = data;
     }
   },
   actions: {
@@ -83,10 +96,34 @@ export default new Vuex.Store({
         delete axios.defaults.headers.common['Authorization'];
         resolve();
       });
+    },
+    async fetchWeatherData({ commit, state }, search) {
+      const apiBase = 'https://api.openweathermap.org/data/2.5/';
+      try {
+        commit('setWeatherData', search);
+        const res = await axios.get(`${apiBase}weather?q=${search}&units=metric&APPID=${state.apiKey}`);
+        // console.log(res.data);
+        const newWeatherData = {
+          name: res.data.name,
+          temp: Math.round(res.data.main.temp),
+          tempMin: res.data.main.temp_min,
+          tempMax: res.data.main.temp_max,
+          feelsLike: res.data.main.feels_like,
+          description: res.data.weather[0].description,
+          icon: res.data.weather[0].icon.substring(0, 2),
+          info: res.data.weather[0].main,
+          wind: res.data.wind.speed,
+          humidity: res.data.main.humidity,
+          clouds: res.data.clouds.all,
+          dateTime: new Date(res.data.dt * 1000 + res.data.timezone * 1000).toString().split('(')[0],
+          country: res.data.sys.country
+        };
+        commit('setWeatherData', newWeatherData);
+        console.log(newWeatherData);
+      } catch (error) {
+        console.log(error);
+        commit('setWeatherData', {});
+      }
     }
-  },
-  getters: {
-    isLoggedIn: (state) => !!state.authToken,
-    authStatus: (state) => state.status
   }
 });
