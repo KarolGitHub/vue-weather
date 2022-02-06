@@ -102,13 +102,11 @@ export default new Vuex.Store({
       try {
         commit('setWeatherData', search);
         const res = await axios.get(`${apiBase}weather?q=${search}&units=metric&APPID=${state.apiKey}`);
-        // console.log(res.data);
         const newWeatherData = {
           name: res.data.name,
           temp: Math.round(res.data.main.temp),
-          tempMin: res.data.main.temp_min,
-          tempMax: res.data.main.temp_max,
           feelsLike: res.data.main.feels_like,
+          pressure: res.data.main.pressure,
           description: res.data.weather[0].description,
           icon: res.data.weather[0].icon.substring(0, 2),
           info: res.data.weather[0].main,
@@ -119,7 +117,6 @@ export default new Vuex.Store({
           country: res.data.sys.country
         };
         commit('setWeatherData', newWeatherData);
-        console.log(newWeatherData);
       } catch (error) {
         console.log(error);
         commit('setWeatherData', {});
